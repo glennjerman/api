@@ -11,6 +11,11 @@ max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
 min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
 threads min_threads_count, max_threads_count
 
+app_dir = File.expand_path("../..", __FILE__)
+key_path = "#{app_dir}/config/certs/server.key"
+cert_path = "#{app_dir}/config/certs/server.crt"
+
+bind  "ssl://127.0.0.1:3000?key=#{key_path}&cert=#{cert_path}"
 # Specifies that the worker count should equal the number of processors in production.
 if ENV["RAILS_ENV"] == "production"
   require "concurrent-ruby"

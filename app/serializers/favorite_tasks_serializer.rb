@@ -1,6 +1,6 @@
 class FavoriteTasksSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :title, :desc
+  attributes :title, :desc, :start_time, :end_time
 
   has_many :schedules
 

@@ -70,7 +70,8 @@ class Api::V1::TasksController < ApplicationController
   def complete
     task = @current_user.tasks.find(params[:id])
     task.completed ||= []
-    task.completed << Time.now.strftime("%m/%d/%Y")
+    date = params[:date] ? Date.strptime(params[:date], "%m/%d/%Y") : Time.now.strftime("%m/%d/%Y")
+    task.completed << date
     if task.save
       render json: 'Task completed'.to_json
     else
@@ -80,14 +81,17 @@ class Api::V1::TasksController < ApplicationController
 
   # PATCH /tasks/:id/uncomplete
   def uncomplete
-    task = @current_user.tasks.find(params[:id])
-    task.completed.delete(Time.now.strftime("%m/%d/%Y"))
-    if task.save
-      render json: 'Task uncompleted'.to_json
-    else
-      render json: { error: task.errors.full_messages }, status: :unprocessable_entity
-    end
+  task = @current_user.tasks.find(params[:id])
+  date_to_remove = params[:date] ? Date.strptime(params[:date], "%m/%d/%Y").strftime("%Y-%m-%d") : Time.now.strftime("%Y-%m-%d")
+  Rails.logger.warn "Task completed dates: #{task.completed.inspect}"
+  Rails.logger.warn "Date to remove: #{date_to_remove}"
+  task.completed.delete(date_to_remove)
+  if task.save
+    render json: 'Task uncompleted'.to_json
+  else
+    render json: { error: task.errors.full_messages }, status: :unprocessable_entity
   end
+end
 
   private
 
@@ -96,7 +100,7 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:desc, :title)
+    params.require(:task).permit(:desc, :title, :time_to_complete, :created_at, :start_time, :end_time, :completed)
   end
 
   def authenticate

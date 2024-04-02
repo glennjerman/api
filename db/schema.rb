@@ -10,13 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_21_181759) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_26_145746) do
   create_table "favorite_tasks", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "title"
     t.string "desc"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.index ["user_id"], name: "index_favorite_tasks_on_user_id"
   end
 
@@ -42,6 +44,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_21_181759) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "completed"
+    t.integer "time_to_complete"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 

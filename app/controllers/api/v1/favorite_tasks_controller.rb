@@ -70,7 +70,7 @@ class Api::V1::FavoriteTasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:desc, :title)
+    params.require(:task).permit(:desc, :title, :start_time, :end_time)
   end
 
   def schedule_params

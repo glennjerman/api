@@ -10,10 +10,11 @@ Rails.application.configure do
   config.hosts << "api.tempots.live"
   # Do not eager load code on boot.
   config.eager_load = false
-  config.ssl_options = {
-    key: Rails.root.join('config', 'server.key'),
-    cert: Rails.root.join('config', 'server.crt')
-  }
+config.force_ssl = true
+config.ssl_options = {
+  key: Rails.root.join('config', 'server.key'),
+  cert: Rails.root.join('config', 'server.crt')
+}
   # Show full error reports.
   config.consider_all_requests_local = true
 
