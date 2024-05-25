@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_26_145746) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_23_215215) do
   create_table "favorite_tasks", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "title"
@@ -47,6 +47,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_26_145746) do
     t.integer "time_to_complete"
     t.datetime "start_time"
     t.datetime "end_time"
+    t.boolean "permanent"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 

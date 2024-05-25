@@ -4,7 +4,9 @@ class TaskSerializer
   attribute :created_at do |object|
     object.created_at.strftime("%m/%d/%Y")
   end
-
+  attribute :permanent do |object|
+    object.attributes.key?('permanent') ? object.permanent : nil
+  end
   attribute :completed do |object|
     object.completed.map { |date| Date.parse(date).strftime("%m/%d/%Y") } if object.completed
   end
