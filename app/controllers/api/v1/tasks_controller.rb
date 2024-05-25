@@ -100,7 +100,7 @@ end
   end
 
   def task_params
-    params.require(:task).permit(:desc, :permanent, :title, :time_to_complete, :created_at, :start_time, :end_time, :completed)
+    params.require(:task).permit(:desc, :title, :time_to_complete, :created_at, :start_time, :end_time, :completed, :permanent)
   end
 
   def authenticate
