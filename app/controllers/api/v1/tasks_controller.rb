@@ -85,7 +85,11 @@ class Api::V1::TasksController < ApplicationController
   date_to_remove = params[:date] ? Date.strptime(params[:date], "%m/%d/%Y").strftime("%Y-%m-%d") : Time.now.strftime("%Y-%m-%d")
   Rails.logger.warn "Task completed dates: #{task.completed.inspect}"
   Rails.logger.warn "Date to remove: #{date_to_remove}"
-  task.completed.delete(date_to_remove)
+  if task.permanent
+    task.completed = []
+  else
+    task.completed.delete(date_to_remove)
+  end
   if task.save
     render json: 'Task uncompleted'.to_json
   else
